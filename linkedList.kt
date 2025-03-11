@@ -1,65 +1,102 @@
-class Node<T>(var data: T, var next: Node<T>? = null)  // cria class node
-class LinkedList<T> {
-    private var head: Node<T>? = null //define o head como null
+// Criar uma data class chamada Node
+data class Node(val value: Int, var next: Node? = null)
 
-    /*d
-    head -> a -> b -> c -> */
+class LinkedList {
+    private var head: Node? = null
 
-    // Inserir no início
-    fun insertAtBeginning(value: T) {
-        val newNode = Node(value) // d
-        newNode.next = head // -> a
-        head = newNode// head -> d
-    } 
-    
-    //Inserir no final
-    fun insertAtEnd(value: T) {
-        val newNode = Node(value) // criamos um novo nó
-        if(head == null) { //verificamos se a lista está vazia
-            head = newNode // se estiver vazia, o novo nó se torna o primeiro
-            return; 
-        } 
-            var current = head // criamos uma variavel temporaria para percorrer a lista
-            while (current?.next != null) { // enquanto não chegarmos ao ultimo nó (aquele cujo next é null)
-                current = current.next
-            }
-            current?.next = newNode // Quando `current` estiver no último nó, apontamos seu next para o novo nó
-        
+    // Inserir no início da lista
+    fun insertBeginning(value: Int) {
+        // Criamos um novo nó
+        val newNode = Node(value)
+
+        // O novo nó aponta para o nó que era a cabeça da lista
+        newNode.next = head 
+
+        // Atualizamos para que head aponte para o novo nó
+        head = newNode
     }
 
-    fun removeAtPosition(position: Int) : Boolean {
-        if(position < 0 || head == null) { //verficar se a position é invalida
-            prinln("Posição inválida")
-            return false
+    // Inserir no final da lista
+    fun insertAtEnd(value: Int) {
+        val newNode = Node(value)
+
+        // Se a lista estiver vazia, o novo nó se torna a cabeça
+        if (head == null) {
+            head = newNode
+            return
         }
 
-        // se for remover o primeiro nó
-        if (position == 0) {
+        var current = head
+        while (current?.next != null) { // Percorrer a lista até o último nó
+            current = current.next
+        }
+
+        // O último nó agora aponta para o novo nó
+        current?.next = newNode
+    }
+
+    // Remover um nó da lista
+    fun remove(value: Int) {
+        if (head == null) return
+
+        // Se o primeiro nó for o que queremos remover
+        if (head?.value == value) {
             head = head?.next
-            return true
+            return
         }
 
-        //head -> (a ->) (b ->) (c ->) (d ->) (e ->) (f ->) null
-        //Percorre até o nó anterior ao que será removido
-        var current = head // variavel temporal para head
-        var currentPosition = 0 // variavel temporal para o position atual
-
-        while(current != null && currentPosition < position -1) {
-            current = current.next // valor que quero eliminar
-            currentPosition++
+        var current = head
+        while (current?.next != null) {
+            if (current.next?.value == value) {
+                // Pulamos o nó que queremos remover
+                current.next = current.next?.next
+                return
+            }
+            current = current.next
         }
-
-        if(current == null || current.next == null) {
-            println("Posição inválida!")
-            return 
-        }
-
-        current.next = current.next?.next // pular
-        return true
-
     }
 
-    fun search(value )
+    // Buscar um valor na lista
+    fun search(value: Int): Node? {
+        var current = head
+        while (current != null) {
+            if (current.value == value) return current
+            current = current.next
+        }
+        return null
+    }
 
+    // Imprimir a lista
+    fun printList() {
+        var current = head
+        while (current != null) {
+            print("${current.value} -> ")
+            current = current.next
+        }
+        println("null")
+    }
+}
 
+// Testando a lista encadeada
+fun main() {
+    val list = LinkedList()
+
+    println("📌 Inserindo no início da lista:")
+    list.insertBeginning(30)
+    list.insertBeginning(20)
+    list.insertBeginning(10)
+    list.printList()  // 10 -> 20 -> 30 -> null
+
+    println("\n📌 Inserindo no final da lista:")
+    list.insertAtEnd(40)
+    list.insertAtEnd(50)
+    list.printList()  // 10 -> 20 -> 30 -> 40 -> 50 -> null
+
+    println("\n📌 Removendo um elemento da lista:")
+    list.remove(30)
+    list.printList()  // 10 -> 20 -> 40 -> 50 -> null
+
+    println("\n📌 Buscando elementos na lista:")
+    println("Procurando 20: ${list.search(20)?.value ?: "Não encontrado"}")  // 20
+    println("Procurando 100: ${list.search(100)?.value ?: "Não encontrado"}")  // Não encontrado
 }
