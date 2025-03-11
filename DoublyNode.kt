@@ -4,8 +4,7 @@
 data class DoublyNode(val value: Int, var next: DoublyNode? = null, var prev: DoublyNode? = null)
 
 
-class DoublyLinkedList(
-    
+class DoublyLinkedList(  
     //head -> null, tail -> null
     private var head: DoublyNode? = null // primeiro nodo
     private var tail: DoublyNode? = null // ultimo nodo
@@ -37,6 +36,27 @@ class DoublyLinkedList(
         prev
 
         */
+
+    }
+
+    fun RemoveEnd() {
+     if(tail == null) {
+        println("Lista Vazia")
+        return 
+     }
+
+     if(tail == head) {
+        head = null
+        tail = null
+     } else {
+        tail = tail?.prev
+        tail?.next = null
+     }
+
+
+
+
+
 
     }
 
