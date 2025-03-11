@@ -16,7 +16,7 @@ fun buscarNumero(vetor: IntArray, numero: Int): Int {
 fun removerElemento(vetor: IntArray, posicao: Int): IntArray {
     if (posicao < 0 || posicao >= vetor.size) {
         println("Posição inválida")
-        return vetor  // Retorna o vetor original sem alterações
+        return vetor 
     }
 
     val listaTemp = vetor.toMutableList()
