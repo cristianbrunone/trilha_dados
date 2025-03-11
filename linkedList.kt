@@ -8,7 +8,6 @@ class LinkedList {
     fun insertBeginning(value: Int) {
         // Criamos um novo nó
         val newNode = Node(value)
-
         // O novo nó aponta para o nó que era a cabeça da lista
         newNode.next = head 
 
