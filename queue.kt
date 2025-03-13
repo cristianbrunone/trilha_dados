@@ -35,8 +35,9 @@ class FilaSimples(val maxSize: Int) {
     }
 
     fun mostrar() {
-        println("Estado da fila:  ${fila.contentToString()}")
+        println("Estado da fila: ${fila.filterNotNull()}")
     }
+    
 
    
 }
